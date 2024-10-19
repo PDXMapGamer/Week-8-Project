@@ -13,8 +13,9 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "Create Week 8 project",
-  description: "'...'",
+  title: "My FE11 Blog",
+  description:
+    "'Website that has units, their stats, and an oppertunity to discuss how everyone is stupid for not playing the single player game the way you personally play it'",
 };
 
 export default function RootLayout({ children }) {
