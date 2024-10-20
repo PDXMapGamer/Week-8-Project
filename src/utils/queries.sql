@@ -154,3 +154,12 @@ VALUES(6, 8, 40, 20, 0, 35, 15, 30, 20, 0),
 (6, 11, 50, 15, 0, 30, 30, 30, 10, 0),
 (6, 12, 20, 0, 30, 30, 25, 30, 0, 25),
 (6, 13, 20, 0, 30, 30, 25, 30, 0, 25);
+
+--! Add default classes 
+ALTER TABLE characters ADD default_class INT;
+UPDATE characters SET default_class = 1 WHERE id = 1;
+UPDATE characters SET default_class = 2 WHERE id = 2;
+UPDATE characters SET default_class = 2 WHERE id = 3;
+UPDATE characters SET default_class = 3 WHERE id = 4;
+UPDATE characters SET default_class = 4 WHERE id = 5;
+UPDATE characters SET default_class = 8 WHERE id = 6;

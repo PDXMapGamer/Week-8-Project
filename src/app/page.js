@@ -1,14 +1,29 @@
 import { db } from "@/utils/dbConnection";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export default function Home() {
+  //
   async function onSubmit(formValues) {
     "use server";
     const formData = formValues.get("username");
+    console.log(formData);
     try {
-      db.query(`INSERT INTO users(username) VALUES($1)`, [formData]);
+      let inDB = false;
+      const query = await db.query(`SELECT username FROM users`);
+      query.rows.forEach((entry) => {
+        if (entry.username == formData) {
+          inDB = true;
+        }
+      });
+      if (!inDB) {
+        db.query(`INSERT INTO users(username) VALUES($1)`, [formData]);
+      }
     } catch (error) {
-      console.error("Error sending username to DB", error);
+      console.error("Error sending username to database", error);
     }
+    revalidatePath(`/${formData}/homepage`);
+    redirect(`/${formData}/homepage`);
   }
   return (
     <div className="h-screen flex justify-center items-center">
