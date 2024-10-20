@@ -1,6 +1,7 @@
 import NavBar from "@/app/components/NavBar";
 import { db } from "@/utils/dbConnection";
-import character from "../characters/[character]/[class]/page";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export default async function createPosts({ params }) {
   const query = await db.query(`SELECT id, character_name FROM characters;`);
@@ -22,6 +23,9 @@ export default async function createPosts({ params }) {
       formData.title,
       formData.content,
     ]);
+    revalidatePath(`/${params.username}/view-post`);
+    redirect(`/${params.username}/view-post`);
+    //Brings them to the posts page but not the specific cost as it has a dynamic id which I can't tell what that id is going to be.
   }
   return (
     <>
